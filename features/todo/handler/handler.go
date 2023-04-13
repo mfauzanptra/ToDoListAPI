@@ -34,6 +34,8 @@ func (tc *todoControl) Create() echo.HandlerFunc {
 		if err != nil {
 			if strings.Contains(err.Error(), "title") {
 				return c.JSON(http.StatusBadRequest, helper.ErrResp("Bad Request", "title cannot be null"))
+			} else if strings.Contains(err.Error(), "group") {
+				return c.JSON(http.StatusBadRequest, helper.ErrResp("Bad Request", "activity_group_id cannot be null"))
 			} else {
 				return c.JSON(http.StatusInternalServerError, helper.ErrResp("Internal Server Error", err.Error()))
 			}
@@ -88,7 +90,7 @@ func (tc *todoControl) Delete() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"status":  "Success",
 			"message": "Success",
-			"data":    nil,
+			"data":    map[string]interface{}{},
 		})
 	}
 }

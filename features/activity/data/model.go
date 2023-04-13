@@ -3,6 +3,8 @@ package data
 import (
 	"time"
 	"todolist/features/activity"
+
+	"gorm.io/gorm"
 )
 
 type Activity struct {
@@ -11,6 +13,7 @@ type Activity struct {
 	Email      string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
+	DeletedAt  gorm.DeletedAt
 }
 
 func CoreToData(core activity.Core) Activity {

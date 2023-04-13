@@ -30,21 +30,23 @@ func (aq *ActivityQry) Create(newAct activity.Core) (activity.Core, error) {
 }
 
 func (aq *ActivityQry) Update(updAct activity.Core) (activity.Core, error) {
-	act := CoreToData(updAct)
+	a := Activity{}
 
-	aff := aq.db.Where("activity_id", act.ActivityId).First(&act).RowsAffected
+	aff := aq.db.Where("activity_id", updAct.ActivityId).First(&a).RowsAffected
 	if aff == 0 {
 		log.Println("id not found")
 		return activity.Core{}, errors.New("id not found")
 	}
 
-	err := aq.db.Updates(&act).Error
+	a.Title = updAct.Title
+
+	err := aq.db.Updates(&a).Error
 	if err != nil {
 		log.Println("error updating activity: ", err)
 		return activity.Core{}, err
 	}
 
-	return ToCore(act), nil
+	return ToCore(a), nil
 }
 
 func (aq *ActivityQry) Delete(id uint) error {

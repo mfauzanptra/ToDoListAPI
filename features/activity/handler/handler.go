@@ -88,7 +88,7 @@ func (ac *activityControl) Delete() echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]interface{}{
 			"status":  "Success",
 			"message": "Success",
-			"data":    nil,
+			"data":    map[string]interface{}{},
 		})
 	}
 }

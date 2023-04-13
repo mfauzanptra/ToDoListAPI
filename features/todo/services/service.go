@@ -19,6 +19,13 @@ func (ts *todoSrv) Create(newTodo todo.Core) (todo.Core, error) {
 	if newTodo.Title == "" {
 		return todo.Core{}, errors.New("title cannot be null")
 	}
+	if newTodo.ActivityGroupId == 0 {
+		return todo.Core{}, errors.New("activity group id cannot be null")
+	}
+	newTodo.IsActive = true
+	if newTodo.Priority == "" {
+		newTodo.Priority = "very-high"
+	}
 
 	res, err := ts.qry.Create(newTodo)
 	if err != nil {
@@ -28,9 +35,9 @@ func (ts *todoSrv) Create(newTodo todo.Core) (todo.Core, error) {
 	return res, nil
 }
 func (ts *todoSrv) Update(id uint, updTodo todo.Core) (todo.Core, error) {
-	if updTodo.Title == "" {
-		return todo.Core{}, errors.New("title cannot be null")
-	}
+	// if updTodo.Title == "" || updTodo.IsActive ==  {
+	// 	return todo.Core{}, errors.New("title cannot be null")
+	// }
 
 	updTodo.TodoId = id
 

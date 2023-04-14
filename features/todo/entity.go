@@ -7,7 +7,7 @@ import (
 )
 
 type Core struct {
-	TodoId          uint      `json:"todo_id"`
+	TodoId          uint      `json:"id"`
 	Title           string    `json:"title"`
 	ActivityGroupId uint      `json:"activity_group_id"`
 	IsActive        bool      `json:"is_active"`

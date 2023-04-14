@@ -44,6 +44,11 @@ func (tq *todoQry) Update(updTodo todo.Core) (todo.Core, error) {
 		return todo.Core{}, err
 	}
 
+	if updTodo.Title == "" {
+		tod.Title = t.Title
+	}
+	tod.Priority = t.Priority
+
 	return ToCore(tod), nil
 }
 func (tq *todoQry) Delete(id uint) error {
@@ -54,7 +59,7 @@ func (tq *todoQry) Delete(id uint) error {
 		return errors.New("id not found")
 	}
 
-	err := tq.db.Where("activity_id", id).Delete(&tod).Error
+	err := tq.db.Where("todo_id", id).Delete(&tod).Error
 	if err != nil {
 		log.Println("error deleting todo: ", err)
 		return err
